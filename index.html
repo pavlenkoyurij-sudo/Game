@@ -1,0 +1,512 @@
+    <!DOCTYPE html>
+    <html lang="uk">
+    <head>
+        <meta charset="UTF-8">
+        <title>Відбудуй Неньку Україну</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com"><!--підключаємо шрифт НУНІТО - три рядки коду-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+        
+
+
+        <style>
+            body {
+                background-image: url("images/background-image.png");
+                background-size: cover;/*розтягуємо картинку на весь екран*/
+                background-position: center;/*центруємо картинку по вертикалі і горизонталі*/
+                background-attachment: fixed;/*фіксуємо артинку на місці, щоб не рухався зі скроломк*/
+                
+                margin: 0;/*занулюємо стандартні відступик*/
+                padding: 0;/*занулюємо стандартні відступик*/
+            }
+
+
+            body{
+                color: rgb(21, 20, 20);
+                text-align: center;
+                font-family: Arial;
+            }
+
+            button{
+                background: #ff6600;
+                padding: 10px 18px;
+                font-size: 20px;
+                cursor: pointer;
+                border-radius: 999px;
+                transition: 0.3s;
+            }
+
+            button:hover {
+                transform: translateY(-5px);
+            }
+
+            .btn-fair {
+                background: #6ee34a;
+                padding: 10px 18px;
+                font-size: 20px;
+                cursor: pointer;
+                border-radius: 999px;
+                transition: 0.3s;
+                color: black;
+            }
+
+            .btn-fair:hover {
+                transform: scale(1.05);
+            }
+
+            #message {
+                color: lightgreen;
+            }
+
+            .pizzeria,
+            .bridge,
+            .school,
+            .hospital {
+                display: flex;
+                margin-top: 30px;
+                margin: 0 auto;
+                border-radius: 30px;
+                width: 90%;
+                box-shadow: 0 4px 20px rgba(205, 201, 201, 0.08);
+                transition: 0.3s;/*--- плавне підстрибування---*/
+            }
+
+            .pizzeria:hover,
+            .bridge:hover,
+            .school:hover,
+            .hospital:hover {
+                transform: scale(1.05);
+            }
+
+            .pizzeria-built,
+            .bridge-built,
+            .school-built,
+            .hospital-built,
+            .work-up,
+            .work-down {
+                display: none;
+                margin-top: 30px;
+                margin: 0 auto;
+                border-radius: 30px;
+                width: 90%;
+                box-shadow: 0 4px 20px rgba(205, 201, 201, 0.08);
+                transition: 0.3s;/*--- плавне підстрибування---*/
+            }
+
+            .pizzeria-built:hover,
+            .bridge-built:hover,
+            .school-built:hover,
+            .hospital-built:hover {
+                transform: scale(1.05);
+            }
+
+            #startScreen {
+                display: flex;
+                text-align: center;
+                justify-content: center;/*ценирує весь блок*/
+                flex-direction: column;/*вирівняй об'єкти у стовпчик - одне під одним*/
+                align-items: center;/*вирівняй об'єкти по центру по горизонталі*/
+                height: 100vh;
+
+                color: rgb(6, 6, 122);
+                font-size: 22px;
+                font-family: "Nunito", sans-serif;
+            }
+
+            #mainGame {
+                display: none;
+            }
+
+            .buildings {
+                display: grid;/*--- розміщує контейнери будівель по горизонталі---*/
+                grid-template-columns: repeat(4, 1fr);/*--- виставляє одинаковий розмір контейнерів---*/
+            }
+
+
+            
+            
+
+            
+
+
+            
+        </style>
+    </head>
+
+     <body>  
+        <div id="startScreen">
+            <!--додаємо прапор України-->
+            <h1><img src="images/ukraine-flag.png" width="60">Відбудуй Неньку Україну</h1><!--ставимо і пропор і заголовок в один рядок-->
+            <p>(Навчальна гра про відбудову країни)</p>
+            <p>Привіт, юний архітектор, наша країна після важких випробувань та перемоги потребує твоєї допомоги</p>
+            <p>Треба відбудувати країну</p>
+            <button onclick="startGame()">😉Почнімо відбудову</button>
+        </div>
+
+
+
+        <div id="mainGame">
+            <h2>🏫 Рівень 1. Відновити школу</h2>
+            
+            <p>Якщо не вистачає монет, відвідай благодійний ярмарок</p> 
+            <p>Варто спекти піцу на продаж для збору монет на відбудову</p>
+
+            <h3> Вибери, що відбудувати:</h3>
+
+                <button onclick="build('school')">🏫 Школа-Ціна 50₴</button>
+                <button onclick="build('hospital')">🏥 Лікарня-Вартість 70₴</button>
+                <button onclick="build('bridge')">🌉 Міст-Вартість 100₴</button>
+                <button onclick="earnCoins()" class="btn-fair">🍕 Спекти та продати піцу</button>
+                <button onclick="resetGame()">🔃 Почати заново</button>
+
+                <audio id="bgMusic" src="audio/background.mpeg" class="background-music" loop></audio>
+                <audio id="hammer-sound" src="audio/hammer.mp4" class="hammer-sound"></audio>
+                <audio id="saw-sound" src="audio/saw2.m4a" class="saw-sound"></audio>
+
+                <div class="buildings">
+            
+                    <div class="building-container">
+                        <img src="images/pizzeria/pizzeria-destroyed.png" class="pizzeria" onclick="build('pizzeria')">
+                        <img src="images/work/work-up.bmp" class="work-up">
+                        <img src="images/work/work-down.bmp" class="work-down">
+                        <img src="images/pizzeria/pizzeria-built.jpg" class="pizzeria-built">
+                    </div> 
+                    
+
+                    <div class="building-container">
+                        <img src="images/bridge/bridge-destroyed.png" class="bridge" onclick="build('bridge')">
+                        <img src="images/work/work-up.bmp" class="work-up">
+                        <img src="images/work/work-down.bmp" class="work-down">
+                        <img src="images/bridge/bridge-built.png" class="bridge-built">
+                    </div> 
+
+                    <div class="building-container">
+                        <img src="images/school/school-destroyed.bmp" class="school" onclick="build('school')">
+                        <img src="images/work/work-up.bmp" class="work-up">
+                        <img src="images/work/work-down.bmp" class="work-down">
+                        <img src="images/school/school-built.bmp" class="school-built">
+                    </div>   
+
+                    <div class="building-container">
+                        <img src="images/hospital/hospital-destroyed.png" class="hospital" onclick="build('hospital')">
+                        <img src="images/work/work-up.bmp" class="work-up">
+                        <img src="images/work/work-down.bmp" class="work-down">
+                        <img src="images/hospital/hospital-built.png" class="hospital-built">
+                    </div>
+                </div>    
+
+
+            <h2 id="message">
+                
+            </h2>
+
+            <h2 id="cityLevel">
+                🌆 Рівень міста: 0
+            </h2>
+
+            <h2 id="coins">
+                🪙 Монети: 80
+            </h2>
+
+            <h2 id="xp">
+                🏆 Досвід: 0
+            </h2>
+
+                
+            
+            <br>
+            
+
+        
+            <script>
+                
+                let bgMusic = document.getElementById("bgMusic");
+                
+                let cityLevel = 0;
+                let coins = 80;
+                let xp = 0;
+
+                
+                let buildings = {
+
+                    pizzeria: {
+                        name: "🍕 Піцерія",
+                        cost: 10,
+                        xp: 5,
+                        built: false
+                    },
+                    school: {
+                        name:"🏫 Школа",
+                        cost: 50,
+                        xp: 10,
+                        built: false
+                    },
+                    hospital: {
+                        name:"🏥 Лікарня",
+                        cost: 70,
+                        xp: 15,
+                        built: false 
+                    },
+                    bridge: {
+                        name:"🌉 Міст",
+                        cost: 100,
+                        xp: 20,
+                        built: false
+                    }
+
+                };
+
+
+                async function build(type){
+
+                        
+                        let container = document.querySelector("." + type).parentElement;//звернення до контейнеру батьківського елементу будівлі(школа, міст, піцерфя,...)
+                        let workUp = container.querySelector(".work-up");//звернення до елементу work-up контейнера
+                        let workDown = container.querySelector(".work-down");//звернення до елементу work-down контейнера
+                        let b = buildings[type];
+                        let hammerSound = document.getElementById("hammer-sound");
+                        let sawSound = document.getElementById("saw-sound");
+                        
+
+                        
+
+                        if (!b) return;
+                        if (b.built) {
+                            document.getElementById("message").innerHTML = b.name + " вже відбудовано! Оберіть інший об'єкт.";
+                        
+
+                            
+                            return;
+                        }
+
+            
+                        
+
+                        
+
+                            //перевіряємо чи вистачвє монет
+                        if (coins < b.cost) {
+                            document.getElementById("message").innerHTML = 
+                            "💸 Не достатньо монет для " + b.cost + "₴";
+                            return;
+                        }
+
+                        
+
+
+                        //! перевірка побудови мосту
+                        if ((type === 'school' || type === 'hospital') && !buildings.bridge.built)
+                        { 
+                            document.getElementById("message").innerHTML = "🚧 Міст ще не побудовано!";
+                            return;
+                        }
+
+                        document.querySelector("." + type).style.display = "none";
+                        workUp.style.display = "flex";
+                        workDown.style.display = "none";
+                        await sleep(500);
+
+                        workDown.style.display = "flex";
+                        workUp.style.display = "none";//ховаємо картинку
+                        hammerSound.currentTime = 0;//повертаємо трек удару молотка на початок треку
+                        hammerSound.play();//програємо удар молотка
+                        sawSound.currentTime = 0;//повертаємо трек удару пилки на початок треку
+                        sawSound.play();//програємо удар пилки
+                        await sleep(500);//визиваємо паузу
+
+                        workUp.style.display = "flex";
+                        workDown.style.display = "none";
+                        await sleep(500);
+
+                        workDown.style.display = "flex";
+                        workUp.style.display = "none";
+                        hammerSound.currentTime = 0;//повертаємо трек удару молотка на початок треку
+                        hammerSound.play();//програємо удар молотка
+                        await sleep(500);
+
+                        workUp.style.display = "flex";
+                        workDown.style.display = "none";
+                        await sleep(500);
+
+                        workDown.style.display = "flex";
+                        workUp.style.display = "none";
+                        hammerSound.currentTime = 0;//повертаємо трек удару молотка на початок треку
+                        hammerSound.play();//програємо удар молотка
+                        
+                        await sleep(500);
+
+                        workUp.style.display = "flex";
+                        workDown.style.display = "none";
+                        await sleep(500);
+
+                        workDown.style.display = "flex";
+                        workUp.style.display = "none";
+                        hammerSound.currentTime = 0;//повертаємо трек удару молотка на початок треку
+                        hammerSound.play();//програємо удар молотка
+                        await sleep(500);
+                        workDown.style.display = "none";
+                        
+                        
+
+                        
+
+                        // Процес будівництва
+                        coins -= b.cost;
+                        xp += b.xp;
+                        cityLevel++;
+                        b.built = true; //об'єкт побудовано
+
+                    changeBuildingImage(type);
+
+
+                        document.getElementById("message").innerHTML = 
+                                "🏗️ Побудовано: " + b.name;
+
+                        randomEvent(); 
+
+                        
+
+
+
+                        
+
+
+
+
+                        //! блокування повторного будівництва або перевірка на повну побудову міста
+                        if (buildings.school.built && buildings.hospital.built && buildings.bridge.built) {
+                            document.getElementById("message").innerHTML = "🎉 Вітаємо! Місто успішно відбудовано!";
+                                        
+                        }
+                        updateUI();
+                    }
+                    
+                function changeBuildingImage(type){
+        
+                    document.querySelector("." + type).style.display = "none";
+                    document.querySelector("." + type + "-built").style.display = "flex";
+                        
+                }    
+                        
+
+                
+
+                function resetGame(){// функція рестарту
+                    
+                    coins = 80;
+                    xp = 0;
+                    cityLevel = 0;
+
+
+            
+
+
+
+                    // скидайємо статус будівництва для усіх сторуд
+
+                        //Візьми всі будівлі з об'єкта buildings. Для кожної будівлі встанови властивість built у значення false.
+                    Object.values(buildings).forEach(building => {building.built = false;
+                    });
+                    
+                    
+                    Object.keys(buildings).forEach(type => {
+                            resetBuildingImage(type);
+                    });
+
+                    
+                
+
+                
+
+                    updateUI();
+
+                    document.getElementById("message").innerHTML =
+                        "🏗️ Починаємо відбудову заново!";
+
+
+                }
+
+
+                
+
+
+
+                function resetBuildingImage(type){
+                        document.querySelector("." + type).style.display = "flex";// скидайємо відбудовану ,будівлю до зруйнованої
+                        document.querySelector("." + type + "-built").style.display = "none";//тобто ці два рядки змінюють картинки
+                }
+
+
+
+                        //функція  заробітку монет
+                function earnCoins (){
+
+                    coins +=30;
+
+                    document.getElementById("message").innerHTML =
+                    "🍕 Продано піцу +30 монет";
+                    updateUI();
+                }
+
+                        //функція випадкових труднощів
+                function randomEvent(){
+                    let chance = Math.random();
+
+                    if (chance < 0.2){
+                        coins -=20;
+                        document.getElementById("message").innerHTML +=
+                        "<br><br>🔥 Пожежа на будівництві! - 20 монет";
+
+                        } else if (chance < 0.4){
+                            coins += 30;
+                            document.getElementById("message").innerHTML +=
+                            "<br><br>🤝 Волонтерська допомога! + 30 монет";
+                        } else {    
+                            document.getElementById("message").innerHTML += "<br><br>🌞 Будівництво йде за планом";
+                        }   
+                    }
+
+
+
+                
+
+                    
+
+                    function updateUI() {
+                        document.getElementById("coins").innerHTML = "🪙 Монети:" + coins;
+                        document.getElementById("xp").innerHTML = "🏆 Досвід:" + xp;
+                        document.getElementById("cityLevel").innerHTML = "🌆 Рівень міста: " + cityLevel;
+                    }
+
+
+                    function sleep(ms) {
+                        return new Promise(resolve => setTimeout(resolve, ms));
+                    }
+
+                    let workUp = true;
+
+                        //тут ми будемо перемикати картинки з молотком вверх і вниз
+                    function toggleWork() {
+
+                    }
+
+                    function startGame() {
+                        bgMusic.volume = 0.20;
+                        bgMusic.currentTime = 0;//повертаємо трек фону на початок треку
+                        bgMusic.play();//програємо фонову мелодію
+
+                        document.querySelector("#startScreen").style.display = "none";
+                        document.querySelector("#mainGame").style.display = "block";
+
+                    }
+
+                    
+
+                
+
+                
+            </script>
+        </div>
+    </body>
+    </html>
