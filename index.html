@@ -123,7 +123,48 @@
                 grid-template-columns: repeat(4, 1fr);/*--- виставляє одинаковий розмір контейнерів---*/
             }
 
+            #bilder{
+                position: fixed;
+                right: 20px;
+                bottom: 10px;
+                
+            }
 
+            #bilder-img {
+                width: 195px;
+            }
+
+            #speech{
+                padding: 40px;
+                text-align: center;
+                font-size: 18px;
+            }
+
+
+            #speechBubble{
+                position: absolute;
+                right: 190px;
+                bottom: 60px;
+                height: 170px;
+                width: 240px;
+                
+
+                background-image: url("images/character/speech.png");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+
+            #speechText{
+                position: absolute;
+                right: 190px;
+                bottom: 25px;
+                height: 170px;
+                width: 240px;
+
+                text-align: center;
+                font-size: 18px;
+                
+            }
             
             
 
@@ -160,6 +201,8 @@
                 <button onclick="earnCoins()" class="btn-fair">🍕 Спекти та продати піцу</button>
                 <button onclick="resetGame()">🔃 Почати заново</button>
 
+                
+
                 <audio id="bgMusic" src="audio/background.mpeg" class="background-music" loop></audio>
                 <audio id="hammer-sound" src="audio/hammer.mp4" class="hammer-sound"></audio>
                 <audio id="saw-sound" src="audio/saw2.m4a" class="saw-sound"></audio>
@@ -194,7 +237,22 @@
                         <img src="images/work/work-down.bmp" class="work-down">
                         <img src="images/hospital/hospital-built.png" class="hospital-built">
                     </div>
-                </div>    
+                </div> 
+
+                <div id="speechText">
+                    
+                </div>
+                
+                <div id="speechBubble">
+
+                    <div id="speech"></div>
+                </div> 
+                
+                 
+
+                <div id="bilder">   
+                    <img src="images/character/bilder.png" id="bilder-img">
+                </div>
 
 
             <h2 id="message">
@@ -222,7 +280,7 @@
             <script>
                 
                 let bgMusic = document.getElementById("bgMusic");
-                
+                let bilder = document.getElementById("bilder");
                 let cityLevel = 0;
                 let coins = 80;
                 let xp = 0;
@@ -273,7 +331,7 @@
 
                         if (!b) return;
                         if (b.built) {
-                            document.getElementById("message").innerHTML = b.name + " вже відбудовано! Оберіть інший об'єкт.";
+                            say(b.name + " вже відбудовано! Обери інший об'єкт.");
                         
 
                             
@@ -287,8 +345,7 @@
 
                             //перевіряємо чи вистачвє монет
                         if (coins < b.cost) {
-                            document.getElementById("message").innerHTML = 
-                            "💸 Не достатньо монет для " + b.cost + "₴";
+                            say("💸 Не достатньо монет" + "<br>☝️Треба спекти та продати піцу");
                             return;
                         }
 
@@ -298,7 +355,7 @@
                         //! перевірка побудови мосту
                         if ((type === 'school' || type === 'hospital') && !buildings.bridge.built)
                         { 
-                            document.getElementById("message").innerHTML = "🚧 Міст ще не побудовано!";
+                            say("🚧 Міст ще не побудовано!");
                             return;
                         }
 
@@ -360,8 +417,7 @@
                     changeBuildingImage(type);
 
 
-                        document.getElementById("message").innerHTML = 
-                                "🏗️ Побудовано: " + b.name;
+                        say("🏗️ Побудовано: " + b.name);
 
                         randomEvent(); 
 
@@ -376,7 +432,7 @@
 
                         //! блокування повторного будівництва або перевірка на повну побудову міста
                         if (buildings.school.built && buildings.hospital.built && buildings.bridge.built) {
-                            document.getElementById("message").innerHTML = "🎉 Вітаємо! Місто успішно відбудовано!";
+                            say("🎉Вітаю!🎉<br>Місто відбудовано!<br>Переходимо до наступного рівня");
                                         
                         }
                         updateUI();
@@ -421,8 +477,7 @@
 
                     updateUI();
 
-                    document.getElementById("message").innerHTML =
-                        "🏗️ Починаємо відбудову заново!";
+                    say("🏗️ Починаємо відбудову заново!");
 
 
                 }
@@ -444,8 +499,7 @@
 
                     coins +=30;
 
-                    document.getElementById("message").innerHTML =
-                    "🍕 Продано піцу +30 монет";
+                    say("🍕 Продано піцу +30 монет");
                     updateUI();
                 }
 
@@ -455,15 +509,13 @@
 
                     if (chance < 0.2){
                         coins -=20;
-                        document.getElementById("message").innerHTML +=
-                        "<br><br>🔥 Пожежа на будівництві! - 20 монет";
+                        say("🔥 Пожежа на будівництві! - 20 монет");
 
                         } else if (chance < 0.4){
                             coins += 30;
-                            document.getElementById("message").innerHTML +=
-                            "<br><br>🤝 Волонтерська допомога! + 30 монет";
+                            say("🤝 Волонтерська допомога! + 30 монет");
                         } else {    
-                            document.getElementById("message").innerHTML += "<br><br>🌞 Будівництво йде за планом";
+                            say("🌞Молодець!<br>Будівництво йде за планом");
                         }   
                     }
 
@@ -496,9 +548,15 @@
                         bgMusic.currentTime = 0;//повертаємо трек фону на початок треку
                         bgMusic.play();//програємо фонову мелодію
 
+                        say("👋Привіт друже!<br>Я Пан Майстер.<br>Почнімо відбудову!");
+
                         document.querySelector("#startScreen").style.display = "none";
                         document.querySelector("#mainGame").style.display = "block";
 
+                    }
+
+                    function say(text){
+                        document.getElementById("speech").innerHTML = text;
                     }
 
                     
