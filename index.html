@@ -214,6 +214,11 @@
                 z-index: 1000;
             }
 
+           #pizzaContainer img { 
+                display: none;
+           }
+
+
             
 
             #pizza1,
@@ -316,11 +321,13 @@
                 </div>
 
                 <div id="pizzaContainer">
-            <img src="images/pizza/pizza1.png" id="pizza1">
-            <img src="images/pizza/pizza2.png" id="pizza2">
-            <img src="images/pizza/pizza3.png" id="pizza3">
-            <img src="images/pizza/pizza4.png" id="pizza4">
-        </div>
+                    <img src="images/pizza/pizza1.png" id="pizza1">
+                    <img src="images/pizza/pizza2.png" id="pizza2">
+                    <img src="images/pizza/pizza3.png" id="pizza3">
+                    <img src="images/pizza/pizza4.png" id="pizza4">
+                    <img src="images/pizza/pizza5.png" id="pizza5">
+                    <img src="images/pizza/pizza6.png" id="pizza6">
+                </div>
 
                 
                     
@@ -608,8 +615,18 @@
                     
                     document.getElementById("pizza3").style.display = "none";
                     document.getElementById("pizza4").style.display = "block";
-                    await sleep(700);
+                    await sleep(500);
+
+                    
                     document.getElementById("pizza4").style.display = "none";
+                    document.getElementById("pizza5").style.display = "block";
+                    await sleep(500);
+
+                    
+                    document.getElementById("pizza5").style.display = "none";
+                    document.getElementById("pizza6").style.display = "block";
+                    await sleep(800);
+                    document.getElementById("pizza6").style.display = "none";
                     
                     
                     coins +=30;
