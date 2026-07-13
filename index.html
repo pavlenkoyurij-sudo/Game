@@ -28,16 +28,31 @@
                 font-family: Arial;
             }
 
-            button{
+            button {
                 background: #ff6600;
                 padding: 10px 18px;
                 font-size: 20px;
                 cursor: pointer;
                 border-radius: 999px;
-                transition: 0.3s;
+                transition: 0.3s;             
             }
 
-            button:hover {
+            .button:hover {
+                transform: translateY(-5px);
+            }
+
+            .btn-reset {
+                background: #ff6600;
+                padding: 10px 18px;
+                font-size: 20px;
+                cursor: pointer;
+                border-radius: 999px;
+                transition: 0.3s;              
+                position: fixed;
+                right: 20px;            
+            }
+
+            .btn-reset:hover {
                 transform: translateY(-5px);
             }
 
@@ -49,10 +64,19 @@
                 border-radius: 999px;
                 transition: 0.3s;
                 color: black;
+                left: 20px;
             }
 
             .btn-fair:hover {
                 transform: scale(1.05);
+            }
+
+            .topButtons{
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: 10px auto;
+                
             }
 
             #message {
@@ -180,10 +204,29 @@
 
                 font-family: "Nunito", sans-serif;
             }
-            
-            
+
+            #pizzaContainer{
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1000;
+            }
 
             
+
+            #pizza1,
+            #pizza2,
+            #pizza3,
+            #pizza4{display: none;}
+            
+            #gameInfo{
+                position: fixed;
+                left: 20px;
+                bottom: 10px;
+            }
+
 
 
             
@@ -200,6 +243,8 @@
             <button onclick="startGame()">😉Почнімо відбудову</button>
         </div>
 
+        
+
 
 
         <div id="mainGame">
@@ -210,10 +255,10 @@
 
             <h3> Вибери, що відбудувати:</h3>
 
-                
-                <button onclick="earnCoins()" class="btn-fair">🍕 Спекти та продати піцу</button>
-                <button onclick="resetGame()">🔃 Почати заново</button>
-
+            <div class="topButtons">   
+                <button onclick="bakePizza()" class="btn-fair">🍕 Спекти піцу</button>
+                <button onclick="resetGame()" class="btn-reset">🔃 Почати заново</button>
+            </div>     
                 
 
                 <audio id="bgMusic" src="audio/background.mpeg" class="background-music" loop></audio>
@@ -252,6 +297,9 @@
                     </div>
                 </div> 
 
+                
+
+
                 <div id="speechText">
                     
                 </div>
@@ -267,23 +315,33 @@
                     <img src="images/character/bilder.png" id="bilder-img">
                 </div>
 
-
-            <h2 id="message">
-                
-            </h2>
-
-            <h2 id="cityLevel">
-                🌆 Рівень міста: 0
-            </h2>
-
-            <h2 id="coins">
-                🪙 Монети: 80
-            </h2>
-
-            <h2 id="xp">
-                🏆 Досвід: 0
-            </h2>
+                <div id="pizzaContainer">
+            <img src="images/pizza/pizza1.png" id="pizza1">
+            <img src="images/pizza/pizza2.png" id="pizza2">
+            <img src="images/pizza/pizza3.png" id="pizza3">
+            <img src="images/pizza/pizza4.png" id="pizza4">
         </div>
+
+                
+                    
+               
+            <div id="gameInfo">  
+                <h2 id="cityLevel">
+                    🌆 Рівень міста: 0
+                </h2>
+
+                <h2 id="coins">
+                    🪙 Монети: 80
+                </h2>
+
+                <h2 id="xp">
+                    🏆 Досвід: 0
+                </h2>
+            </div>    
+        </div>
+        
+
+        
 
                 
         <div id="winScreen">
@@ -527,13 +585,43 @@
 
 
                         //функція  заробітку монет
-                function earnCoins (){
+                async function bakePizza() {
+                    document.querySelector(".buildings").style.display = "none";//будівлі зникають при випікання піци
+                    document.getElementById("pizzaContainer").style.display = "flex";
 
+                    document.getElementById("pizza1").style.display = "block";
+                    document.getElementById("pizza2").style.display = "none";
+                    document.getElementById("pizza3").style.display = "none";
+                    document.getElementById("pizza4").style.display = "none";
+                    await sleep(700);
+
+                    
+                    document.getElementById("pizza1").style.display = "none";
+                    document.getElementById("pizza2").style.display = "block";
+                    await sleep(700);
+
+                    
+                    document.getElementById("pizza2").style.display = "none";
+                    document.getElementById("pizza3").style.display = "block";
+                    await sleep(700);
+
+                    
+                    document.getElementById("pizza3").style.display = "none";
+                    document.getElementById("pizza4").style.display = "block";
+                    await sleep(700);
+                    document.getElementById("pizza4").style.display = "none";
+                    
+                    
                     coins +=30;
-
-                    say("🍕 Продано піцу +30 монет");
                     updateUI();
+                    say("🍕 Піцу спечено<br> і продано! +30 монет");
+
+                    await sleep(1000);
+                    document.getElementById("pizzaContainer").style.display = "none";
+                    document.querySelector(".buildings").style.display = "";//будівлі з'являються після випікання
                 }
+
+                
 
                         //функція випадкових труднощів
                 function randomEvent(){
