@@ -23,7 +23,7 @@
 
 
             body{
-                color: rgb(21, 20, 20);
+                color: darkblue;
                 text-align: center;
                 font-family: Arial;
             }
@@ -109,7 +109,7 @@
                 align-items: center;/*вирівняй об'єкти по центру по горизонталі*/
                 height: 100vh;
 
-                color: rgb(6, 6, 122);
+                color: darkblue;
                 font-size: 22px;
                 font-family: "Nunito", sans-serif;
             }
@@ -138,6 +138,7 @@
                 padding: 40px;
                 text-align: center;
                 font-size: 18px;
+                color: darkblue;
             }
 
 
@@ -160,10 +161,24 @@
                 bottom: 25px;
                 height: 170px;
                 width: 240px;
-
+                color: darkblue;
                 text-align: center;
                 font-size: 18px;
                 
+            }
+
+            #winScreen{
+                display: none;
+                height: 100vh;
+
+            
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                color: darkblue;
+
+                font-family: "Nunito", sans-serif;
             }
             
             
@@ -188,16 +203,14 @@
 
 
         <div id="mainGame">
-            <h2>🏫 Рівень 1. Почни відбудову з піцеріїї щоб заробляти ресурси</h2>
+            <h2>🏫 Рівень 1. Відновити школу</h2>
             
             <p>Якщо не вистачає монет, відвідай благодійний ярмарок</p> 
             <p>Варто спекти піцу на продаж для збору монет на відбудову</p>
 
             <h3> Вибери, що відбудувати:</h3>
 
-                <button onclick="build('school')">🏫 Школа-Ціна 50₴</button>
-                <button onclick="build('hospital')">🏥 Лікарня-Вартість 70₴</button>
-                <button onclick="build('bridge')">🌉 Міст-Вартість 100₴</button>
+                
                 <button onclick="earnCoins()" class="btn-fair">🍕 Спекти та продати піцу</button>
                 <button onclick="resetGame()">🔃 Почати заново</button>
 
@@ -270,10 +283,20 @@
             <h2 id="xp">
                 🏆 Досвід: 0
             </h2>
+        </div>
 
                 
-            
-            <br>
+        <div id="winScreen">
+
+            <h1>🎉Вітаємо!</h1>
+            <h2>Ти успішно відбудував місто!</h2>
+            <p>👷‍♂️Пан майстер пишається тобою!<br>Наступне місто вже чекає</p>
+
+            <button onclick="nextLevel()">
+                Наступний рівень ▶
+            </button>
+        </div>  
+        
             
 
         
@@ -432,7 +455,16 @@
 
                         //! блокування повторного будівництва або перевірка на повну побудову міста
                         if (buildings.school.built && buildings.hospital.built && buildings.bridge.built) {
-                            say("🎉Вітаю!🎉<br>Місто відбудовано!<br>Переходимо до наступного рівня");
+                            
+
+                            say("🎉Чудова робота!<br>Я знав, що ти справишся!");
+
+                        function showWinScreen(){
+                            document.querySelector("#mainGame").style.display = "none";
+                            document.querySelector("#winScreen").style.display = "flex";
+                        }
+
+                        setTimeout(showWinScreen, 3000);
                                         
                         }
                         updateUI();
@@ -560,6 +592,10 @@
                     }
 
                     
+
+                    function nextLevel(){
+                        alert("🚧 Рівень 2 в розробці");
+                    }
 
                 
 
