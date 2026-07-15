@@ -269,6 +269,7 @@
                 <audio id="bgMusic" src="audio/background.mpeg" class="background-music" loop></audio>
                 <audio id="hammer-sound" src="audio/hammer.mp4" class="hammer-sound"></audio>
                 <audio id="saw-sound" src="audio/saw2.m4a" class="saw-sound"></audio>
+                <audio id="cookerSound" src="audio/cooker.mp3" class="cooker-sound"></audio>
 
                 <div class="buildings">
             
@@ -595,6 +596,7 @@
                 async function bakePizza() {
                     document.querySelector(".buildings").style.display = "none";//будівлі зникають при випікання піци
                     document.getElementById("pizzaContainer").style.display = "flex";
+                    
 
                     document.getElementById("pizza1").style.display = "block";
                     document.getElementById("pizza2").style.display = "none";
@@ -607,7 +609,8 @@
                     document.getElementById("pizza2").style.display = "block";
                     await sleep(700);
 
-                    
+                    cookerSound.currentTime = 0;//повертаємо трек духовки на початок треку
+                    cookerSound.play();//програємо звук духовки
                     document.getElementById("pizza2").style.display = "none";
                     document.getElementById("pizza3").style.display = "block";
                     await sleep(700);
