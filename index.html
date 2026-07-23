@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+-<!DOCTYPE html>
     <html lang="uk">
     <head>
         <meta charset="UTF-8">
@@ -11,21 +11,15 @@
 
 
         <style>
+                        
             body {
-                background-image: url("images/background-image.png");
-                background-size: cover;/*розтягуємо картинку на весь екран*/
-                background-position: center;/*центруємо картинку по вертикалі і горизонталі*/
-                background-attachment: fixed;/*фіксуємо артинку на місці, щоб не рухався зі скроломк*/
-                
                 margin: 0;/*занулюємо стандартні відступик*/
-                padding: 0;/*занулюємо стандартні відступик*/
-            }
+                padding: 0;/*занулюємо стандартні відступик*/ 
+                overflow: hidden;
 
-
-            body{
                 color: darkblue;
                 text-align: center;
-                font-family: Arial;
+                font-family: Arial;               
             }
 
             button {
@@ -37,7 +31,7 @@
                 transition: 0.3s;             
             }
 
-            .button:hover {
+            button:hover {
                 transform: translateY(-5px);
             }
 
@@ -75,7 +69,7 @@
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
-                margin: 10px auto;
+                margin: 0 auto;
                 
             }
 
@@ -85,8 +79,9 @@
 
             .pizzeria,
             .bridge,
-            .school,
-            .hospital {
+            .library,
+            .hospital,
+            .mill {
                 display: flex;
                 margin-top: 30px;
                 margin: 0 auto;
@@ -96,19 +91,23 @@
                 transition: 0.3s;/*--- плавне підстрибування---*/
             }
 
+            
+
             .pizzeria:hover,
             .bridge:hover,
-            .school:hover,
-            .hospital:hover {
+            .library:hover,
+            .hospital:hover,
+            .mill:hover {
                 transform: scale(1.05);
             }
 
             .pizzeria-built,
             .bridge-built,
-            .school-built,
+            .library-built,
             .hospital-built,
             .work-up,
-            .work-down {
+            .work-down,
+            .mill-built {
                 display: none;
                 margin-top: 30px;
                 margin: 0 auto;
@@ -120,26 +119,73 @@
 
             .pizzeria-built:hover,
             .bridge-built:hover,
-            .school-built:hover,
-            .hospital-built:hover {
+            .library-built:hover,
+            .hospital-built:hover,
+            .mill-built:hover {
                 transform: scale(1.05);
             }
 
             #startScreen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+
+                background-image: url("background-level2.png");
+                background-size: cover;/*розтягуємо картинку на весь екран*/
+                background-position: center;/*центруємо картинку по вертикалі і горизонталі і піднімаємо вверх*/
                 display: flex;
                 text-align: center;
                 justify-content: center;/*ценирує весь блок*/
                 flex-direction: column;/*вирівняй об'єкти у стовпчик - одне під одним*/
                 align-items: center;/*вирівняй об'єкти по центру по горизонталі*/
-                height: 100vh;
-
+                
+                
                 color: darkblue;
                 font-size: 22px;
                 font-family: "Nunito", sans-serif;
             }
 
+            #blinkArea{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+
+                background-image: url("chernihiv.png");
+                background-size: cover;/*розтягуємо картинку на весь екран*/
+                background-position: center;/*центруємо картинку по вертикалі і горизонталі і піднімаємо вверх*/
+                display: flex;
+                z-index: 999;
+                pointer-events: none;
+                animation: blink 1s infinite;
+            }
+
+            @keyframes blink {
+                0% {opacity: 1;}
+                50% {opacity: 0;}
+                100% {opacity: 1;}
+            }
+
             #mainGame {
                 display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                min-height: 100vh;
+                background-image: url("background-level22.png");
+                background-size: cover;/*розтягуємо картинку на весь екран*/
+                background-position: top center;/*центруємо картинку по вертикалі і горизонталі і піднімаємо вверх*/
+                background-repeat: no-repeat;
+
+                width: 100%;
+                min-height: 100vh;
+                margin: 0;/*занулюємо стандартні відступик*/
+                padding: 0;/*занулюємо стандартні відступик*/
+                
             }
 
             .buildings {
@@ -163,18 +209,23 @@
                 text-align: center;
                 font-size: 18px;
                 color: darkblue;
+                position: absolute;
+                right: 190px;
+                bottom: 25px;
+                height: 170px;
+                width: 240px;
             }
 
 
             #speechBubble{
                 position: absolute;
-                right: 190px;
-                bottom: 60px;
+                right: 220px;/*регулюємо : вліво-вправо, якщо менше то вправо*/
+                bottom: 100px;
                 height: 170px;
                 width: 240px;
                 
 
-                background-image: url("images/character/speech.png");
+                background-image: url("character/speech-bilder.png");
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
             }
@@ -192,9 +243,17 @@
             }
 
             #winScreen{
+                
                 display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
                 height: 100vh;
-
+                background-image: url("../images/background-image.png");
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
             
                 flex-direction: column;
                 justify-content: center;
@@ -232,6 +291,121 @@
                 bottom: 10px;
             }
 
+           
+
+            h2{
+                margin: 0;
+                padding-top: 20px;
+            }
+
+            .mill-container {
+                margin-left: -30px;
+                position: relative;
+                top: 25px;
+            }
+
+
+
+            #mill-built-img {
+                position: relative;
+                height: 180px; 
+                width: auto;
+                z-index: 2;
+            }
+
+            .mill-wheel{
+                display: none;
+                position: absolute;
+
+                left: 700px;
+                top: 0px;
+
+                width: 190px;
+                z-index: 1;
+                
+                animation: spin 5s linear infinite;/*--- обертання колесса ---*/
+            }
+
+            #mill-destroyed-img {
+                width: auto;
+               height: 180px; 
+            }
+
+            .mill-work {
+                width: auto;
+               height: 180px; 
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                   transform: rotate(360deg); 
+                }
+            }
+
+            #book-woman {
+                position: fixed; 
+                left: 20px;/*--- щоб це працювало треба вказувати: position: fixed; ---*/
+                bottom: 0; 
+            }
+
+            #book-woman img {
+                width: 280px;
+                
+            }
+
+            #speech-woman {
+                
+                position: fixed; 
+                left: 90px;/*--- щоб це працювало треба вказувати: position: fixed; ---*/
+                bottom: 140px;
+                /*transition: opacity.2s;*/ 
+            }
+
+            #speech-woman img {
+
+                width: 60%;
+                
+            }
+
+            #speech-bilder {
+                position: fixed; 
+                right: 90px;/*--- щоб це працювало треба вказувати: position: fixed; ---*/
+                bottom: 110px;
+                /*transition: opacity.2s;*/
+            }
+
+            #speech-bilder img {
+                width: 60%;
+                
+            }
+
+            #womanText{
+                position: absolute;
+                top: 35px;
+                left: 180px;
+                width: 160px;
+                text-align: center;
+                color: darkblue;
+                font-size: 18px;
+            }
+
+            #bilderText{
+                position: absolute;
+                top: 35px;
+                right: 180px;
+                width: 160px;
+                text-align: center;
+                color: darkblue;
+                font-size: 18px;
+            }
+
+
+            
+            
+
 
 
             
@@ -239,113 +413,143 @@
     </head>
 
      <body>  
+        
+
         <div id="startScreen">
+            <div id="blinkArea"></div>
             <!--додаємо прапор України-->
-            <h1><img src="images/ukraine-flag.png" width="60">Відбудуй Неньку Україну</h1><!--ставимо і пропор і заголовок в один рядок-->
-            <p>(Навчальна гра про відбудову країни)</p>
-            <p>Привіт, юний архітектор, наша країна після важких випробувань та перемоги потребує твоєї допомоги</p>
-            <p>Треба відбудувати країну</p>
-            <button onclick="startGame()">😉Почнімо відбудову</button>
-        </div>
+            <h1><img src="../images/ukraine-flag.png" width="60">Відбудуй Неньку Україну</h1><!--ставимо і пропор і заголовок в один рядок-->
+            <p> </p>
+            <p> </p>
+            <button id="startButton" onclick="nextDialog()">👉Далі</button>
+            <!---<button onclick="startGame()">😉Нумо до роботи!</button>*/--->
+
+            <div id="book-woman">
+                <img src="character/book-woman.png" id="book-woman-img">
+            </div>
+
+            <div id="speech-woman">
+                <img src="character/speech-woman.png" id="speech-woman-img">
+                <div id="womanText"></div>
+            </div>
+
+            <div id="bilder">   
+                 <img src="character/bilder.png" id="bilder-img">
+            </div>
+
+            <div id="speech-bilder">
+                <img src="character/speech-bilder.png" id="speech-bilder-img">
+                <div id="bilderText"></div>
+            </div>
 
         
+            
+
+
+        </div>
 
 
 
         <div id="mainGame">
-            <h2>🏫 Рівень 1. Варто почати з піцерії, щоб заробляти ресурси☝️</h2>
             
-            <p>Якщо не вистачає монет, відвідай благодійний ярмарок</p> 
-            <p>Варто спекти піцу на продаж для збору монет на відбудову</p>
+            <h1>Рівень 2</h1>
+            <p>Якщо не вистачає ресурсів - варто спекти піцу на продаж!</p>
 
-            <h3> Вибери, що відбудувати:</h3>
-
+            
             <div class="topButtons">   
                 <button onclick="bakePizza()" class="btn-fair">🍕 Спекти піцу</button>
                 <button onclick="resetGame()" class="btn-reset">🔃 Почати заново</button>
             </div>     
                 
 
-                <audio id="bgMusic" src="audio/background.mpeg" class="background-music" loop></audio>
-                <audio id="hammer-sound" src="audio/hammer.mp4" class="hammer-sound"></audio>
-                <audio id="saw-sound" src="audio/saw2.m4a" class="saw-sound"></audio>
-                <audio id="cookerSound" src="audio/cooker.mp3" class="cooker-sound"></audio>
+                <audio id="bgMusic" src="../audio/background.mpeg" class="background-music" loop></audio>
+                <audio id="hammer-sound" src="../audio/hammer.mp4" class="hammer-sound"></audio>
+                <audio id="saw-sound" src="../audio/saw2.m4a" class="saw-sound"></audio>
+                <audio id="cookerSound" src="../audio/cooker.mp3" class="cooker-sound"></audio>
 
                 <div class="buildings">
             
                     <div class="building-container">
-                        <img src="images/pizzeria/pizzeria-destroyed.png" class="pizzeria" onclick="build('pizzeria')">
-                        <img src="images/work/work-up.bmp" class="work-up">
-                        <img src="images/work/work-down.bmp" class="work-down">
-                        <img src="images/pizzeria/pizzeria-built.jpg" class="pizzeria-built">
+                        <img src="pizzeria/pizzeria-destroyed.png" class="pizzeria" onclick="build('pizzeria')">
+                        <img src="work/work-up.png" class="work-up">
+                        <img src="work/work-down.png" class="work-down">
+                        <img src="pizzeria/pizzeria-built.png" class="pizzeria-built">
                     </div> 
                     
 
                     <div class="building-container">
-                        <img src="images/bridge/bridge-destroyed.png" class="bridge" onclick="build('bridge')">
-                        <img src="images/work/work-up.bmp" class="work-up">
-                        <img src="images/work/work-down.bmp" class="work-down">
-                        <img src="images/bridge/bridge-built.png" class="bridge-built">
+                        <img src="bridge/bridge-destroyed.png" class="bridge" onclick="build('bridge')">
+                        <img src="work/work-up.png" class="work-up">
+                        <img src="work/work-down.png" class="work-down">
+                        <img src="bridge/bridge-built.png" class="bridge-built">
                     </div> 
 
                     <div class="building-container">
-                        <img src="images/school/school-destroyed.bmp" class="school" onclick="build('school')">
-                        <img src="images/work/work-up.bmp" class="work-up">
-                        <img src="images/work/work-down.bmp" class="work-down">
-                        <img src="images/school/school-built.bmp" class="school-built">
+                        <img src="library/library-destroyed.png" class="library" onclick="build('library')">
+                        <img src="work/work-up.png" class="work-up">
+                        <img src="work/work-down.png" class="work-down">
+                        <img src="library/library-built.png" class="library-built">
                     </div>   
 
                     <div class="building-container">
-                        <img src="images/hospital/hospital-destroyed.png" class="hospital" onclick="build('hospital')">
-                        <img src="images/work/work-up.bmp" class="work-up">
-                        <img src="images/work/work-down.bmp" class="work-down">
-                        <img src="images/hospital/hospital-built.png" class="hospital-built">
+                        <img src="hospital/hospital-destroyed.png" class="hospital" onclick="build('hospital')">
+                        <img src="work/work-up.png" class="work-up">
+                        <img src="work/work-down.png" class="work-down">
+                        <img src="hospital/hospital-built.png" class="hospital-built">
                     </div>
-                </div> 
-
-                
-
-
-                <div id="speechText">
-                    
+                 
                 </div>
-                
-                <div id="speechBubble">
 
-                    <div id="speech"></div>
-                </div> 
+                    <div class="building-container mill-container">
+                        <img src="mill/mill-destroyed.png" id="mill-destroyed-img" class="mill" onclick="build('mill')">
+                        <img src="mill/wheel.png" class="mill-wheel">
+                        <img src="work/work-up.png" class="work-up mill-work">
+                        <img src="work/work-down.png" class="work-down mill-work">
+                        <img src="mill/mill-built.png" id="mill-built-img" class="mill-built">
+                    </div>
                 
+                    
+
+                
+
+
+                <div id="speechText"></div>
+                
+                <div id="speechBubble"></div>
+
+                <div id="speech"></div> 
+           
                  
 
                 <div id="bilder">   
-                    <img src="images/character/bilder.png" id="bilder-img">
+                    <img src="../images/character/bilder.png" id="bilder-img">
                 </div>
 
                 <div id="pizzaContainer">
-                    <img src="images/pizza/pizza1.png" id="pizza1">
-                    <img src="images/pizza/pizza2.png" id="pizza2">
-                    <img src="images/pizza/pizza3.png" id="pizza3">
-                    <img src="images/pizza/pizza4.png" id="pizza4">
-                    <img src="images/pizza/pizza5.png" id="pizza5">
-                    <img src="images/pizza/pizza6.png" id="pizza6">
+                    <img src="pizza/pizza1.png" id="pizza1">
+                    <img src="pizza/pizza2.png" id="pizza2">
+                    <img src="pizza/pizza3.png" id="pizza3">
+                    <img src="pizza/pizza4.png" id="pizza4">
+                    <img src="pizza/pizza5.png" id="pizza5">
+                    <img src="pizza/pizza6.png" id="pizza6">
                 </div>
 
                 
                     
                
-            <div id="gameInfo">  
-                <h2 id="cityLevel">
-                    🌆 Рівень міста: 0
-                </h2>
+                <div id="gameInfo">  
+                    <h2 id="cityLevel">
+                        🌆 Рівень міста: 0
+                    </h2>
 
-                <h2 id="coins">
-                    🪙 Монети: 80
-                </h2>
+                    <h2 id="coins">
+                        🪙 Монети: 80
+                    </h2>
 
-                <h2 id="xp">
-                    🏆 Досвід: 0
-                </h2>
-            </div>    
+                    <h2 id="xp">
+                        🏆 Досвід: 0
+                    </h2>
+                </div>    
         </div>
         
 
@@ -369,37 +573,95 @@
             <script>
                 
                 let bgMusic = document.getElementById("bgMusic");
-                let bilder = document.getElementById("bilder");
+                
                 let cityLevel = 0;
                 let coins = 80;
                 let xp = 0;
                 let isBaking = false;
+
+                let dialogStep = 0;
+                let dialog = [
+                    {
+                        woman:"",
+                        builder:"Ти добре попрацював!"
+                    },
+                    {
+                        woman:"",
+                        builder:"Але роботи<br> ще багато!"
+                    },
+
+                    {
+                        woman:"Привіт, хлопці!<br> Допоможіть мені,<br>будь ласка",
+                        builder:""
+                    },
+
+                    {
+                        woman:"",
+                        builder:"Як ми можемо допомогти,<br>пані Бібліатекарко?"
+                    },
+
+                    {
+                        woman:"В нас, на Чернігівщині<br>від обстрілів<br> постраждала бібліотека.",
+                        builder:""
+                    },
+
+                    {
+                        woman:"І тепер малечі <br>немає де здобувати знання.",
+                        builder:""
+                    },
+
+                    {
+                        woman:"",
+                        builder:"Ми зараз все полагодимо,<br>нумо до роботи,<br>юнний архітекторе!"
+                    },
+
+                    
+                ];
+
+                //початковий стан діалогу
+                function initDialog() {   
+                    document.getElementById("speech-woman").style.display = "none";
+                    document.getElementById("speech-bilder").style.display = "block";
+
+                    builderSay(dialog[0].builder);//підтягуємо перший елемент діалогу з масиву, 0 - в масиві це перший елемент
+                    dialogStep = 1;
+                }
+                initDialog();
+
+
 
                 
                 let buildings = {
 
                     pizzeria: {
                         name: "🍕 Піцерія",
-                        cost: 10,
+                        cost: 60,
                         xp: 5,
                         built: false
                     },
-                    school: {
-                        name:"🏫 Школа",
-                        cost: 50,
-                        xp: 10,
-                        built: false
-                    },
+                    
                     hospital: {
                         name:"🏥 Лікарня",
                         cost: 70,
-                        xp: 15,
+                        xp: 10,
                         built: false 
                     },
                     bridge: {
                         name:"🌉 Міст",
-                        cost: 100,
+                        cost: 80,
+                        xp: 15,
+                        built: false
+                    },
+                    library: {
+                        name:"📚 Бібліотека",
+                        cost: 90,
                         xp: 20,
+                        built: false
+                    },
+                    mill: {
+                        name:"💰 Млин",
+                        cost: 100,
+                        xp: 25,
                         built: false
                     }
 
@@ -443,7 +705,8 @@
 
 
                         //! перевірка побудови мосту
-                        if ((type === 'school' || type === 'hospital') && !buildings.bridge.built)
+                        if ((type === 'hospital' ||
+                        type === 'library' || type === 'mill') && !buildings.bridge.built)
                         { 
                             say("🚧 Міст ще не побудовано!");
                             return;
@@ -505,14 +768,16 @@
                         b.built = true; //об'єкт побудовано
 
                     changeBuildingImage(type);
+                        if(type === "mill"){
+                            document.querySelector(".mill-wheel").style.display = "block";
+                        }
 
-
-                        say("🏗️ Побудовано: " + b.name);
+                        say("🏗️ Побудовано:<br> " + b.name);
 
 
 
                         //! блокування повторного будівництва або перевірка на повну побудову міста
-                        if (buildings.school.built && buildings.hospital.built && buildings.bridge.built) {
+                        if (buildings.hospital.built && buildings.bridge.built && buildings.library.built && buildings.mill.built) {
                             
 
                             say("🎉Чудова робота!<br>Я знав, що ти справишся!");
@@ -522,7 +787,7 @@
                                 document.querySelector("#winScreen").style.display = "flex";
                             }
 
-                            setTimeout(showWinScreen, 3000);
+                            setTimeout(showWinScreen, 6000);
                                         
                     } else {
                         randomEvent(); 
@@ -570,7 +835,7 @@
 
                     updateUI();
 
-                    say("🏗️ Починаємо відбудову заново!");
+                    say("🏗️ Починаємо<br> відбудову заново!");
 
 
                 }
@@ -583,6 +848,9 @@
                 function resetBuildingImage(type){
                         document.querySelector("." + type).style.display = "flex";// скидайємо відбудовану ,будівлю до зруйнованої
                         document.querySelector("." + type + "-built").style.display = "none";//тобто ці два рядки змінюють картинки
+                        if(tipe === "mill"){
+                            document.querySelector(".mill-wheel").style.display = "none";
+                        }
                 }
 
 
@@ -594,13 +862,14 @@
                     
 
                     if (!buildings.pizzeria.built) {
-                        say("🍕 Спочатку потрібно відбудувати піцерію!");
+                        say("🍕 Спочатку потрібно<br> відбудувати піцерію!");
                         return;
                     }
 
                     isBaking = true;//не дозволяє пекти дві піци підряд
 
                     document.querySelector(".buildings").style.display = "none";//будівлі зникають при випікання піци
+                    document.querySelector(".mill").parentElement.style.display = "none";
                     document.getElementById("pizzaContainer").style.display = "flex";
                     
 
@@ -645,7 +914,7 @@
                     await sleep(1000);
                     document.getElementById("pizzaContainer").style.display = "none";
                     document.querySelector(".buildings").style.display = "";//будівлі з'являються після випікання
-
+                    document.querySelector(".mill").parentElement.style.display = "block";
                     isBaking = false;//не дозволяє пекти дві піци підряд
                 }
 
@@ -661,7 +930,7 @@
 
                         } else if (chance < 0.4){
                             coins += 30;
-                            say("🤝 Волонтерська допомога! + 30 монет");
+                            say("🤝 Волонтерська допомога!<br> + 30 монет");
                         } else {    
                             say("🌞Молодець!<br>Будівництво йде за планом");
                         }   
@@ -696,7 +965,7 @@
                         bgMusic.currentTime = 0;//повертаємо трек фону на початок треку
                         bgMusic.play();//програємо фонову мелодію
 
-                        say("👋Привіт друже!<br>Я Пан Майстер.<br>Почнімо відбудову!");
+                        say("👋Почнімо відбудову!");
 
                         document.querySelector("#startScreen").style.display = "none";
                         document.querySelector("#mainGame").style.display = "block";
@@ -707,16 +976,59 @@
                         document.getElementById("speech").innerHTML = text;
                     }
 
+                    function womanSay(text){
+                        document.getElementById("womanText").innerHTML = text;}
+
+                    function builderSay(text){
+                        document.getElementById("bilderText").innerHTML = text;}
+
+                    function nextDialog(){
+
+                        let step = dialog[dialogStep];
+                        
+                        if(step.woman != ""){
+
+                        document.getElementById("speech-woman").style.display = "block";
+                        document.getElementById("speech-bilder").style.display = "none";
+
+                        document.getElementById("womanText").innerHTML = step.woman;
+                        }else{
+
+                        document.getElementById("speech-woman").style.display = "none";
+                        document.getElementById("speech-bilder").style.display = "block";
+
+                        document.getElementById("bilderText").innerHTML = step.builder;
+                            
+                        }
+
+
+
+                        dialogStep++;
+
+                        if(dialogStep >= dialog.length){
+                            let btn = document.getElementById("startButton");
+
+                            btn.innerHTML = "😉Нумо до роботи!";
+                            btn.onclick = startGame;
+                        }
+
+                    }
+                    
+                    
                     
 
                     function nextLevel(){
-                        window.location.href = "level2/index.html";
+                        alert("🚧 Рівень 3 в розробці");// поки не готовий наступний рівень
                     }
+
+                    //function nextLevel(){
+                    //    window.location.href = "level3/index.html";// коли буде готовий 3 рівень
+                    //}
 
                 
 
                 
             </script>
-        </div>
+        
     </body>
     </html>
